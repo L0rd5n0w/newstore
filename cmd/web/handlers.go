@@ -26,7 +26,7 @@ func(app *application) home(w http.ResponseWriter, r *http.Request) {
 }
 
 func(app *application) form(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("./template/html/form.gohtml")
+	t, err := template.ParseFiles("./templates/html/form.gohtml")
 	if err != nil {
 		log.Print(err)
 		http.Error(w, "Internal Server Error", 500)
