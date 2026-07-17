@@ -15,7 +15,7 @@ func(app *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	t, err := template.ParseFiles("./templates/html/home.gohtml")
+	t, err := template.ParseFiles("./templates/html/home.html")
 	if err != nil {
 		log.Print(err)
 		http.Error(w, "Internal Server Error", 500)
@@ -29,7 +29,7 @@ func(app *application) home(w http.ResponseWriter, r *http.Request) {
 }
 
 func(app *application) form(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("./templates/html/form.gohtml")
+	t, err := template.ParseFiles("./templates/html/form.html")
 	if err != nil {
 		log.Print(err)
 		http.Error(w, "Internal Server Error", 500)
