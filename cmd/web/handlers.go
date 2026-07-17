@@ -4,25 +4,28 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-
-	"github.com/L0rd5n0w/newstore/internals/models"
+	// "github.com/L0rd5n0w/newstore/internals/models"
 )
 
 func(app *application) home(w http.ResponseWriter, r *http.Request) {
+
+	books, err := app.books.All()
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
 
 	t, err := template.ParseFiles("./templates/html/home.gohtml")
 	if err != nil {
 		log.Print(err)
 		http.Error(w, "Internal Server Error", 500)
+		return
 	}
 
-	err = t.Execute(w, nil)
+	err = t.Execute(w, books)
 	if err != nil {
 		log.Print(err)
-		http.Error(w, "Internal Server Error", 500)
 	}
-
-	w.Write([]byte("This is a restart"))
 }
 
 func(app *application) form(w http.ResponseWriter, r *http.Request) {
@@ -40,16 +43,19 @@ func(app *application) form(w http.ResponseWriter, r *http.Request) {
 }
 
 func(app *application) formHandler(w http.ResponseWriter, r *http.Request) {
-	title := r.FormValue("title")
-	author := r.FormValue("author")
-	description := r.FormValue("description")
-
-	bb := &models.Books{
-		Title: title,
-		Author: author,
-		Description: description,
+	err := r.ParseForm()
+	if err != nil {
+		http.Error(w, err.Error(), 400)
 	}
-	w.Write([]byte("Saving to database"))
 
-	log.Print(bb)
+	err = app.books.Insert(
+		r.PostForm.Get("title"),
+		r.PostForm.Get("author"),
+		r.PostForm.Get("decription"),
+	)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	}
+
+	http.Redirect(w, r, "/", http.StatusFound)
 }

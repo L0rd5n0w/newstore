@@ -5,12 +5,13 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/L0rd5n0w/newstore/internals/models"
+//	"github.com/L0rd5n0w/newstore/internals/models"
+	"github.com/L0rd5n0w/newstore/internals/models/sqlite"
 	_ "github.com/mattn/go-sqlite3"
 )
 
 type application struct {
-	Books	*models.Books
+	books	*sqlite.BooksModel
 }
 
 func main() {
@@ -19,10 +20,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Print(db)
 
 	app := &application{
-		Books: &models.Books{},
+		books: &sqlite.BooksModel{
+			DB: db,
+		},
 	}
 
 	log.Print("Starting server on :8000")
