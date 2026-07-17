@@ -34,7 +34,7 @@ func(bm *BooksModel) All() ([]models.Books, error) {
 }
 
 func(bm *BooksModel) Insert(title, author, description string) error {
-	stmt := `INSERT INTO books (title, author, description, createdAt)
+	stmt := `INSERT INTO books (title, author, descrip, createdAt)
 	VALUES(?, ?, ?, datetime("now"))`
 
 	_, err := bm.DB.Exec(stmt, title, author, description)

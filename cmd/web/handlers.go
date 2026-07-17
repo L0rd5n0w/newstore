@@ -22,7 +22,7 @@ func(app *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = t.Execute(w, books)
+	err = t.Execute(w, map[string]any{"Books": books})
 	if err != nil {
 		log.Print(err)
 	}

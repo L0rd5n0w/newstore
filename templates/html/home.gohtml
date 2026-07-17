@@ -10,7 +10,14 @@
 
         <p><a href="/form">Click for Form</a></p>
 
-        
+            {{range .Books}}
+            <article>
+                <h2>{{.Title}}</h2>
+                <div>{{.Author}}</div>
+                <p>{{.Description}}</p>
+                <time datetime="{{.CreatedAt}}">{{.CreatedAt}}</time>
+            </article>
+            {{end}}
 
         <footer>
             Powered by <a href="https://golang.org">Go</a>
