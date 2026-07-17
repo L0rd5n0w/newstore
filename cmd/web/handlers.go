@@ -51,7 +51,7 @@ func(app *application) formHandler(w http.ResponseWriter, r *http.Request) {
 	err = app.books.Insert(
 		r.PostForm.Get("title"),
 		r.PostForm.Get("author"),
-		r.PostForm.Get("decription"),
+		r.PostForm.Get("description"),
 	)
 	if err != nil {
 		http.Error(w, err.Error(), 500)

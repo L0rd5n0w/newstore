@@ -12,9 +12,9 @@
 
             {{range .Books}}
             <article>
-                <h2>{{.Title}}</h2>
-                <div>{{.Author}}</div>
-                <p>{{.Description}}</p>
+                <h2>Title: {{.Title}}</h2>
+                <div>Author: {{.Author}}</div>
+                <p>Description: {{.Description}}</p>
                 <time datetime="{{.CreatedAt}}">{{.CreatedAt}}</time>
             </article>
             {{end}}

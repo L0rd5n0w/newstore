@@ -40,3 +40,7 @@ func(bm *BooksModel) Insert(title, author, description string) error {
 	_, err := bm.DB.Exec(stmt, title, author, description)
 	return err
 }
+
+/*func(bm *BooksModel) Edit() error {
+	stmt := ``
+}*/
