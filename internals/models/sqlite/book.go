@@ -11,7 +11,7 @@ type BooksModel struct {
 }
 
 func(bm *BooksModel) All() ([]models.Books, error) {
-	stmt := `SELECT id, title, author, createdAT FROM books ORDER BY id DESC`
+	stmt := `SELECT id, title, author, descrip, createdAt FROM books ORDER BY id DESC`
 	rows, err := bm.DB.Query(stmt)
 	if err != nil {
 		return nil, err
@@ -20,7 +20,7 @@ func(bm *BooksModel) All() ([]models.Books, error) {
 	books := []models.Books{}
 	for rows.Next() {
 		b := models.Books{}
-		err := rows.Scan(&b.ID, &b.Title, &b.Author, &b.CreatedAt)
+		err := rows.Scan(&b.ID, &b.Title, &b.Author, &b.Description, &b.CreatedAt)
 		if err != nil {
 			return nil, err
 		}
@@ -34,7 +34,7 @@ func(bm *BooksModel) All() ([]models.Books, error) {
 }
 
 func(bm *BooksModel) Insert(title, author, description string) error {
-	stmt := `INSERT INTO books (title, author, description, createdAT)
+	stmt := `INSERT INTO books (title, author, description, createdAt)
 	VALUES(?, ?, ?, datetime("now"))`
 
 	_, err := bm.DB.Exec(stmt, title, author, description)

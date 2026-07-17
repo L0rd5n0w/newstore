@@ -4,7 +4,7 @@ CREATE TABLE books (
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
     descrip TEXT NOT NULL,
-    createdAT DATETIME NOT NULL
+    createdAt DATETIME NOT NULL
 );
 
 -- +goose Down
