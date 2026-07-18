@@ -41,6 +41,14 @@ func(bm *BooksModel) Insert(title, author, description string) error {
 	return err
 }
 
-/*func(bm *BooksModel) Edit() error {
-	stmt := ``
-}*/
+func(bm *BooksModel) Update(author, description string) error {
+	stmt := `UPDATE books SET (author, descrip) WHERE id
+	VALUES(?, ?, ?)`
+
+	_, err := bm.DB.Exec(stmt, author, description)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>FORM</title>
+    </head>
+
+    <body>
+
+        <form action="/form/update" method="POST">
+            <header><h2>Update Book</h2></header>
+            <div>
+                <input type="hidden" value="csrf_token">
+            </div>
+
+            <div>
+                <label>Author:</label>
+                <input type="text" name="author" value="">
+            </div>
+
+
+            <div>
+                <label>Description:</label>
+                <input type="text" name="description" value="">            
+            </div>
+
+            <div>
+                <input type="submit" value="Update Book">
+            </div>
+        </form>
+
+        <footer>
+            Powered by <a href="https://golang.org">Go</a>
+        </footer>
+    </body>
+</html>

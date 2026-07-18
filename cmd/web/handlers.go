@@ -59,3 +59,33 @@ func(app *application) formHandler(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/", http.StatusFound)
 }
+
+func(app *application) formUpdate(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("./templates/html/updateform.html")
+	if err != nil {
+		log.Print(err)
+		http.Error(w, err.Error(), 500)
+	}
+
+	err = t.Execute(w, nil)
+	if err != nil {
+		log.Print(err)
+	}
+}
+
+func(app *application) formUpdateSaver(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		http.Error(w, err.Error(), 400)
+	}
+
+	err = app.books.Update(
+		r.PostForm.Get("author"),
+		r.PostForm.Get("description"),
+	)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	}
+
+	http.Redirect(w, r, "/", http.StatusFound)
+}
