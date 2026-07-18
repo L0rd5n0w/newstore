@@ -10,6 +10,19 @@ type BooksModel struct {
 	DB *sql.DB
 }
 
+func(bm *BooksModel) Get(id int) (*models.Books, error) {
+	stmt := `SELECT id, title, author, descrip, createdAt FROM books WHERE id = ?`
+
+	row := bm.DB.QueryRow(stmt, id)
+	b := &models.Books{}
+
+	err := row.Scan(&b.ID, &b.Author, &b.Description, &b.CreatedAt)
+	if err != nil {
+		return nil, err
+	}
+	return b, nil
+}
+
 func(bm *BooksModel) All() ([]models.Books, error) {
 	stmt := `SELECT id, title, author, descrip, createdAt FROM books ORDER BY id DESC`
 	rows, err := bm.DB.Query(stmt)
