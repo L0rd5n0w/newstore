@@ -67,7 +67,7 @@ func(bm *BooksModel) Update(author, description string) error {
 }
 
 func(bm *BooksModel) Delete(id int) error {
-	stmt := `DELETE id, title, author, description, createdAt WHERE id = ?`
+	stmt := `DELETE id, title, author, descrip, createdAt WHERE id = ?`
 
 	_, err := bm.DB.Exec(stmt, id)
 	if err != nil {
