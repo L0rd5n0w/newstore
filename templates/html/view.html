@@ -13,13 +13,15 @@
                 <strong>{{.Title}}</strong>
                 <span>#{{.ID}}</span>
             </div>
-            <pre><code>{{.Author}}</code></pre>
-            <pre><code>{{.Description}}</code></pre>
+            <pre><code>Author: {{.Author}}</code></pre>
+            <pre><code>Description: {{.Description}}</code></pre>
             <div>
                 <time>Created: {{.CreatedAt}}</time>
             </div>
-            <button><a href="/form/update/:id">Edit</a></button>
-        </div>
+                <form action="/book/delete" method="DELETE">
+                    <button>DELETE</button>
+                </form>
+            </div>
 
         <footer>
             Powered by <a href="https://golang.org">Go</a>

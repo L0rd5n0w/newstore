@@ -115,3 +115,19 @@ func(app *application) formUpdateSaver(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/", http.StatusFound)
 }
+
+func(app *application) delete(w http.ResponseWriter, r *http.Request) {
+	params:= httprouter.ParamsFromContext(r.Context())
+
+	id, err := strconv.Atoi(params.ByName("id"))
+	if err != nil {
+		log.Print(err)
+	}
+	
+	err = app.books.Delete(id)
+	if err != nil {
+		log.Print(err)
+	}
+
+	http.Redirect(w, r, "/", http.StatusFound)
+}

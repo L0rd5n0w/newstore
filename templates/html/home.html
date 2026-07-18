@@ -17,6 +17,7 @@
                 <div>Author: {{.Author}}</div>
                 <p>Description: {{.Description}}</p>
                 <time datetime="{{.CreatedAt}}">{{.CreatedAt}}</time>
+                <button><a href="/form/update/{{.ID}}">Edit</a></button>
             </article>
             {{end}}
 
