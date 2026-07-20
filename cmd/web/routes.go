@@ -12,7 +12,7 @@ func (app *application) routes() *http.ServeMux {
 	mux.HandleFunc("GET /form", app.form)
 	mux.HandleFunc("POST /form/post", app.formHandler)
 	mux.HandleFunc("GET /form/update/{id}", app.formUpdate)
-	mux.HandleFunc("POST /form/update", app.formUpdateSaver)
+	mux.HandleFunc("POST /form/updated", app.formUpdateSaver)
 	mux.HandleFunc("DELETE /book/delete", app.delete)
 
 	return mux

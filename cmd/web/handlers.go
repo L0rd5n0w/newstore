@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"strings"
 )
 
 func(app *application) home(w http.ResponseWriter, r *http.Request) {
@@ -30,15 +29,16 @@ func(app *application) home(w http.ResponseWriter, r *http.Request) {
 }
 
 func(app *application) view(w http.ResponseWriter, r *http.Request) {
-	parts := strings.Split(r.URL.Path, "/")
+	idStr := r.PathValue("id")
 
-	if len(parts) < 4 {
-		http.Error(w, "Invalid Path", 400)
+	if idStr == "" {
+		http.Error(w, "Missing book ID", http.StatusBadRequest)
 		return
 	}
-	id, err := strconv.Atoi(parts[3])
+	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		log.Print(err)
+		http.Error(w, "Invalid Book ID", http.StatusBadRequest)
+		return
 	}
 
 	bookView, err := app.books.Get(id)
@@ -109,14 +109,16 @@ func(app *application) formUpdateSaver(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), 400)
 	}
-	parts := strings.Split(r.URL.Path, "/")
-	if len(parts) < 4 {
-		http.Error(w, "Invalid Path", 400)
+	idStr := r.PathValue("id")
+
+	if idStr == "" {
+		http.Error(w, "Missing Book ID", http.StatusBadRequest)
 		return
 	}
-	id, err := strconv.Atoi(parts[3])
+	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		log.Print(err)
+		http.Error(w, "Invalid Book ID", http.StatusBadRequest)
+		return
 	}
 
 	err = app.books.Update(
@@ -132,15 +134,16 @@ func(app *application) formUpdateSaver(w http.ResponseWriter, r *http.Request) {
 }
 
 func(app *application) delete(w http.ResponseWriter, r *http.Request) {
-	parts := strings.Split(r.URL.Path, "/")
+	idStr := r.PathValue("id")
 
-	if len(parts) < 4 {
-		http.Error(w, "Invalid Path", 400)
+	if idStr == "" {
+		http.Error(w, "Missing Book ID", http.StatusBadRequest)
 		return
 	}
-	id, err := strconv.Atoi(parts[3])
+	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		log.Print(err)
+		http.Error(w, "Invalid Book ID", http.StatusBadRequest)
+		return
 	}
 	
 	err = app.books.Delete(id)
