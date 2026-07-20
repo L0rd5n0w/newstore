@@ -16,7 +16,7 @@ func(bm *BooksModel) Get(id int) (*models.Books, error) {
 	row := bm.DB.QueryRow(stmt, id)
 	b := &models.Books{}
 
-	err := row.Scan(&b.ID, &b.Author, &b.Description, &b.CreatedAt)
+	err := row.Scan(&b.ID, &b.Title, &b.Author, &b.Description, &b.CreatedAt)
 	if err != nil {
 		return nil, err
 	}
@@ -54,11 +54,10 @@ func(bm *BooksModel) Insert(title, author, description string) error {
 	return err
 }
 
-func(bm *BooksModel) Update(author, description string) error {
-	stmt := `UPDATE books SET (author, descrip) WHERE id
-	VALUES(?, ?, ?)`
+func(bm *BooksModel) Update(author, description string, id int) error {
+	stmt := `UPDATE books SET author = ?, descrip = ? WHERE id = ?`
 
-	_, err := bm.DB.Exec(stmt, author, description)
+	_, err := bm.DB.Exec(stmt, author, description, id)
 	if err != nil {
 		return err
 	}
@@ -67,7 +66,7 @@ func(bm *BooksModel) Update(author, description string) error {
 }
 
 func(bm *BooksModel) Delete(id int) error {
-	stmt := `DELETE id, title, author, descrip, createdAt WHERE id = ?`
+	stmt := `DELETE FROM books WHERE id = ?`
 
 	_, err := bm.DB.Exec(stmt, id)
 	if err != nil {

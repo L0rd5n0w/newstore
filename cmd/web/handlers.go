@@ -5,8 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	
-	"github.com/julienschmidt/httprouter"
+	"strings"
 )
 
 func(app *application) home(w http.ResponseWriter, r *http.Request) {
@@ -31,22 +30,28 @@ func(app *application) home(w http.ResponseWriter, r *http.Request) {
 }
 
 func(app *application) view(w http.ResponseWriter, r *http.Request) {
-	params := httprouter.ParamsFromContext(r.Context())
+	parts := strings.Split(r.URL.Path, "/")
 
-	id, err := strconv.Atoi(params.ByName("id"))
+	if len(parts) < 4 {
+		http.Error(w, "Invalid Path", 400)
+		return
+	}
+	id, err := strconv.Atoi(parts[3])
 	if err != nil {
-		http.Error(w, err.Error(), 500)
+		log.Print(err)
 	}
 
 	bookView, err := app.books.Get(id)
 	if err != nil {
 		http.Error(w, err.Error(), 400)
+		return
 	}
 
 	t, err := template.ParseFiles("./templates/html/view.html")
 	if err != nil {
-		log.Print(err)
+		log.Fatal(err)
 		http.Error(w, err.Error(), 500)
+		return
 	}
 	err = t.Execute(w, bookView)
 	if err != nil {
@@ -104,10 +109,20 @@ func(app *application) formUpdateSaver(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), 400)
 	}
+	parts := strings.Split(r.URL.Path, "/")
+	if len(parts) < 4 {
+		http.Error(w, "Invalid Path", 400)
+		return
+	}
+	id, err := strconv.Atoi(parts[3])
+	if err != nil {
+		log.Print(err)
+	}
 
 	err = app.books.Update(
 		r.PostForm.Get("author"),
 		r.PostForm.Get("description"),
+		id,
 	)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
@@ -117,9 +132,13 @@ func(app *application) formUpdateSaver(w http.ResponseWriter, r *http.Request) {
 }
 
 func(app *application) delete(w http.ResponseWriter, r *http.Request) {
-	params:= httprouter.ParamsFromContext(r.Context())
+	parts := strings.Split(r.URL.Path, "/")
 
-	id, err := strconv.Atoi(params.ByName("id"))
+	if len(parts) < 4 {
+		http.Error(w, "Invalid Path", 400)
+		return
+	}
+	id, err := strconv.Atoi(parts[3])
 	if err != nil {
 		log.Print(err)
 	}

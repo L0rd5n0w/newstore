@@ -18,7 +18,7 @@
             <div>
                 <time>Created: {{.CreatedAt}}</time>
             </div>
-                <form action="/book/delete" method="DELETE">
+                <form action="/book/delete/{{.ID}}" method="DELETE">
                     <button>DELETE</button>
                 </form>
             </div>
