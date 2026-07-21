@@ -92,13 +92,31 @@ func(app *application) formHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func(app *application) formUpdate(w http.ResponseWriter, r *http.Request) {
+		idStr := r.PathValue("id")
+
+	if idStr == "" {
+		http.Error(w, "Missing book ID", http.StatusBadRequest)
+		return
+	}
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, "Invalid Book ID", http.StatusBadRequest)
+		return
+	}
+
+	bookView, err := app.books.Get(id)
+	if err != nil {
+		http.Error(w, err.Error(), 400)
+		return
+	}
+	
 	t, err := template.ParseFiles("./templates/html/updateform.html")
 	if err != nil {
 		log.Print(err)
 		http.Error(w, err.Error(), 500)
 	}
 
-	err = t.Execute(w, nil)
+	err = t.Execute(w, bookView)
 	if err != nil {
 		log.Print(err)
 	}
@@ -106,7 +124,7 @@ func(app *application) formUpdate(w http.ResponseWriter, r *http.Request) {
 
 func(app *application) formUpdateSaver(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
-	if err != nil {
+/*	if err != nil {
 		http.Error(w, err.Error(), 400)
 	}
 	idStr := r.PathValue("id")
@@ -114,7 +132,9 @@ func(app *application) formUpdateSaver(w http.ResponseWriter, r *http.Request) {
 	if idStr == "" {
 		http.Error(w, "Missing Book ID", http.StatusBadRequest)
 		return
-	}
+	}*/
+	idStr := r.FormValue("id")
+
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		http.Error(w, "Invalid Book ID", http.StatusBadRequest)

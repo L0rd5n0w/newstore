@@ -7,11 +7,14 @@
 
     <body>
 
-        <form action="/form/updated" method="POST">
+        <form action="/form/update/" method="POST">
             <header><h2>Update Book</h2></header>
             <div>
                 <strong>{{.Title}}</strong>
-                <span>#{{.ID}}</span>
+            </div>
+            <div>
+                <label>ID</label>
+                <input name="id" type="number">Insert the number {{.ID}}</input>
             </div>
             <div>
                 <input type="hidden" value="csrf_token">
