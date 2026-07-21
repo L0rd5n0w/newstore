@@ -14,7 +14,7 @@
             {{range .Books}}
             <article>
                 <a href="/book/view/{{.ID}}"><h2>{{.Title}}</h2></a>
-                <div>Author: {{.Author}}</div>
+                <div><a href="/book/view/{{.ID}}">Author: {{.Author}}</a></div>
                 <p>Description: {{.Description}}</p>
                 <time datetime="{{.CreatedAt}}">{{.CreatedAt}}</time>
                 <button><a href="/form/update/{{.ID}}">Edit</a></button>
