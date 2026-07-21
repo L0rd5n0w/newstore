@@ -6,15 +6,15 @@
     </head>
 
     <body>
-        <header><h1>HOME</h1></header>
-        <a href="/"><h3>Form</h3></a>
+        <a href="/"><header><h1>HOME</h1></header></a>
+        <h3>Form</h3>
 
         <p><a href="/form">Click for Form</a></p>
 
             {{range .Books}}
             <article>
                 <a href="/book/view/{{.ID}}"><h2>{{.Title}}</h2></a>
-                <div><a href="/book/view/{{.ID}}">Author: {{.Author}}</a></div>
+                <div>Author: {{.Author}}</div>
                 <p>Description: {{.Description}}</p>
                 <time datetime="{{.CreatedAt}}">{{.CreatedAt}}</time>
                 <button><a href="/form/update/{{.ID}}">Edit</a></button>

@@ -79,8 +79,14 @@ func(app *application) formHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 400)
 	}
 
+	title := r.PostForm.Get("title")
+	if title == "" {
+		http.Error(w, "Title is Empty", 500)
+		return
+	}
+
 	err = app.books.Insert(
-		r.PostForm.Get("title"),
+		title,
 		r.PostForm.Get("author"),
 		r.PostForm.Get("description"),
 	)
@@ -142,7 +148,6 @@ func(app *application) formUpdateSaver(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = app.books.Update(
-		r.PostForm.Get("author"),
 		r.PostForm.Get("description"),
 		id,
 	)
