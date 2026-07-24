@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+</head>
+<body>
+    <head>Register below</head>
+    <form action="/user/save" method="POST">
+        <div>
+            <label>Firstname:</label>
+            <input type="text" name="firstname">
+        </div>
+        <div>
+            <label>Lastname:</label>
+            <input type="text" name="lastname">
+        </div>
+        <div>
+            <label>Email:</label>
+            <input type="email" name="email">
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="hashed_password">
+        </div>
+    </form>
+    <footer>
+        <span>Powered by PARZIVAL & <a href="https://golang.org">GO</a></span>
+    </footer>
+</body>
+</html>

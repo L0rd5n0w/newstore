@@ -12,6 +12,7 @@ import (
 
 type application struct {
 	books	*sqlite.BooksModel
+	user	*sqlite.UserModel
 }
 
 func main() {
@@ -23,6 +24,9 @@ func main() {
 
 	app := &application{
 		books: &sqlite.BooksModel{
+			DB: db,
+		},
+		user: &sqlite.UserModel{
 			DB: db,
 		},
 	}

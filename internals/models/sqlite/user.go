@@ -12,3 +12,4 @@ type UserModel struct {
 	DB	*sql.DB
 }
 
+func(bm *UserModel) Insert()

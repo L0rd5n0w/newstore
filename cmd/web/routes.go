@@ -14,6 +14,7 @@ func (app *application) routes() *http.ServeMux {
 	mux.HandleFunc("GET /form/update/{id}", app.formUpdate)
 	mux.HandleFunc("POST /form/update/", app.formUpdateSaver)
 	mux.HandleFunc("POST /book/delete/{id}", app.delete)
+	mux.HandleFunc("GET /form/register", app.userRegistration)
 
 	return mux
 }

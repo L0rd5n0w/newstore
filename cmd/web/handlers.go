@@ -98,7 +98,7 @@ func(app *application) formHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func(app *application) formUpdate(w http.ResponseWriter, r *http.Request) {
-		idStr := r.PathValue("id")
+	idStr := r.PathValue("id")
 
 	if idStr == "" {
 		http.Error(w, "Missing book ID", http.StatusBadRequest)
@@ -176,5 +176,21 @@ func(app *application) delete(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 	}
 
+	http.Redirect(w, r, "/", http.StatusFound)
+}
+
+func(app *application) userRegistration(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("./templates/html/user/registration.html")
+	if err != nil {
+		log.Print(err)
+		http.Error(w, err.Error(), 400)
+		return
+	}
+	err = t.Execute(w, nil)
+	if err != nil {
+		log.Print(err)
+		return
+	}
+	
 	http.Redirect(w, r, "/", http.StatusFound)
 }
