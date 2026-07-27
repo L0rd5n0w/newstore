@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 
-//	"github.com/L0rd5n0w/newstore/internals/models"
 	"github.com/L0rd5n0w/newstore/internals/models/sqlite"
 	_ "github.com/mattn/go-sqlite3"
 )

@@ -22,3 +22,4 @@ type Users struct {
 	HashedPassword		[]byte
 	Created				time.Time
 }
+
