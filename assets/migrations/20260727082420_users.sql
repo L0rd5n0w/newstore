@@ -1,6 +1,6 @@
 -- +goose Up
 CREATE TABLE user (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY, -- UUID stored as text
     firstname VARCHAR(255) NOT NULL,
     lastname VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE user (
 );
 
 -- +goose Down
-DROP TABLE user;
+
 
 
 CREATE UNIQUE INDEX user_uc_email ON user (email);
