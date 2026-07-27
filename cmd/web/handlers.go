@@ -5,6 +5,8 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+
+	"github.com/google/uuid"
 )
 
 func(app *application) home(w http.ResponseWriter, r *http.Request) {
@@ -191,6 +193,28 @@ func(app *application) userRegistration(w http.ResponseWriter, r *http.Request) 
 		log.Print(err)
 		return
 	}
-	
+
+	if r.FormValue("email") == "" && r.FormValue("hashed_password") == "" {
+		http.Error(w, "", 400)
+		return
+	} 
+
 	http.Redirect(w, r, "/", http.StatusFound)
+}
+
+func(app *application) userSave(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		log.Print(err)
+	}
+
+	id := uuid.NewString()
+
+	app.user.Insert(
+		id,
+		r.PostForm.Get("firstname"),
+		r.PostForm.Get("lastname"),
+		r.PostForm.Get("email"),
+		r.PostForm.Get("password"),
+	)
 }
