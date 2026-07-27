@@ -2,8 +2,6 @@ package models
 
 import (
 	"time"
-	"github.com/google/uuid"
-	
 )
 
 type Books struct {
@@ -15,7 +13,6 @@ type Books struct {
 }
 
 type Users struct {
-	Id					uuid.UUID
 	FirstName			string
 	LastName			string
 	Email				string
