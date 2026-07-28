@@ -217,4 +217,6 @@ func(app *application) userSave(w http.ResponseWriter, r *http.Request) {
 		r.PostForm.Get("email"),
 		r.PostForm.Get("password"),
 	)
+
+	http.Redirect(w, r, "/login", http.StatusFound)
 }
