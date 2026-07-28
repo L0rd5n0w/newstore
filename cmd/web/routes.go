@@ -16,6 +16,8 @@ func (app *application) routes() *http.ServeMux {
 	mux.HandleFunc("POST /book/delete/{id}", app.delete)
 	mux.HandleFunc("GET /form/register", app.userRegistration)
 	mux.HandleFunc("POST /user/save", app.userSave)
+	mux.HandleFunc("GET /form/login", app.loginForm)
+	//mux.HandleFunc("POST /user/login", app.*)
 
 	return mux
 }

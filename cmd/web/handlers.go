@@ -194,29 +194,43 @@ func(app *application) userRegistration(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	if r.FormValue("email") == "" && r.FormValue("hashed_password") == "" {
-		http.Error(w, "", 400)
-		return
-	} 
-
-	http.Redirect(w, r, "/", http.StatusFound)
+	http.Redirect(w, r, "/form/login", http.StatusFound)
 }
 
 func(app *application) userSave(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		log.Print(err)
+		return
 	}
 
 	id := uuid.NewString()
 
-	app.user.Insert(
-		id,
-		r.PostForm.Get("firstname"),
-		r.PostForm.Get("lastname"),
-		r.PostForm.Get("email"),
-		r.PostForm.Get("password"),
-	)
+	if r.FormValue("email") == "" && r.FormValue("hashed_password") == "" {
+		http.Redirect(w, r, "/form/register", http.StatusNotFound)
+	} else {
 
+		app.user.Insert(
+			id,
+			r.PostForm.Get("firstname"),
+			r.PostForm.Get("lastname"),
+			r.PostForm.Get("email"),
+			r.PostForm.Get("password"),
+		)
+	}
 	http.Redirect(w, r, "/login", http.StatusFound)
+}
+
+func(app *application) loginForm(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("./templates/html/user/login.html")
+	if err != nil {
+		log.Print(err)
+		http.Error(w, "Page not Found", 404)
+		return
+	}
+
+	err = t.Execute(w, nil)
+	if err != nil {
+		log.Print(err)
+	}
 }
