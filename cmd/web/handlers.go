@@ -193,8 +193,6 @@ func(app *application) userRegistration(w http.ResponseWriter, r *http.Request) 
 		log.Print(err)
 		return
 	}
-
-	http.Redirect(w, r, "/form/login", http.StatusFound)
 }
 
 func(app *application) userSave(w http.ResponseWriter, r *http.Request) {
@@ -205,20 +203,22 @@ func(app *application) userSave(w http.ResponseWriter, r *http.Request) {
 	}
 
 	id := uuid.NewString()
+	email := r.PostForm.Get("email")
+	password := r.PostForm.Get("password")
 
-	if r.FormValue("email") == "" && r.FormValue("hashed_password") == "" {
-		http.Redirect(w, r, "/form/register", http.StatusNotFound)
-	} else {
-
-		app.user.Insert(
-			id,
-			r.PostForm.Get("firstname"),
-			r.PostForm.Get("lastname"),
-			r.PostForm.Get("email"),
-			r.PostForm.Get("password"),
-		)
+	if email == "" && password == "" {
+		http.Error(w, "Email and password can not be empty", 402)
+		return
 	}
-	http.Redirect(w, r, "/login", http.StatusFound)
+
+	app.user.Insert(
+		id,
+		r.PostForm.Get("firstname"),
+		r.PostForm.Get("lastname"),
+		email,
+		password,
+	)
+	http.Redirect(w, r, "/form/login", http.StatusFound)
 }
 
 func(app *application) loginForm(w http.ResponseWriter, r *http.Request) {
